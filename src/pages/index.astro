@@ -1,0 +1,67 @@
+---
+const pages = [
+  {
+    href: '/buenas-noches',
+    emoji: '🌙',
+    title: 'Buenas Noches',
+    desc: 'Un mensaje especial con música y animaciones',
+    gradient: 'from-purple-900 to-pink-900',
+    border: 'border-pink-500/30',
+    hover: 'hover:border-pink-400/60',
+  },
+];
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inicio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet" />
+    <style>
+      @import "tailwindcss";
+      body { font-family: 'Inter', sans-serif; }
+    </style>
+  </head>
+  <body class="min-h-screen bg-slate-950 text-white flex flex-col">
+
+    <!-- Header minimalista -->
+    <header class="border-b border-white/10 px-6 py-4">
+      <div class="max-w-2xl mx-auto flex items-center gap-2">
+        <span class="text-xl">🌐</span>
+        <span class="font-semibold text-white/80 text-sm tracking-wide">Mi Sitio</span>
+      </div>
+    </header>
+
+    <!-- Contenido -->
+    <main class="flex-1 max-w-2xl mx-auto w-full px-6 py-12">
+      <h1 class="text-3xl font-semibold mb-2">Páginas</h1>
+      <p class="text-white/50 text-sm mb-8">Selecciona una página para visitar</p>
+
+      <nav class="flex flex-col gap-3">
+        {pages.map((page) => (
+          <a
+            href={page.href}
+            class={`group flex items-center gap-4 rounded-xl p-4 border bg-gradient-to-r ${page.gradient} ${page.border} ${page.hover} transition-all duration-200 hover:scale-[1.01] hover:shadow-lg`}
+          >
+            <span class="text-2xl">{page.emoji}</span>
+            <div class="flex-1">
+              <p class="font-semibold text-white text-sm">{page.title}</p>
+              <p class="text-white/50 text-xs mt-0.5">{page.desc}</p>
+            </div>
+            <span class="text-white/30 group-hover:text-white/70 transition-colors text-lg">→</span>
+          </a>
+        ))}
+      </nav>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/10 px-6 py-4 text-center text-white/30 text-xs">
+      Hecho con Astro
+    </footer>
+
+  </body>
+</html>

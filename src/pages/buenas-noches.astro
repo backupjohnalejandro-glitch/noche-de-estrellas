@@ -1,0 +1,269 @@
+---
+const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? '';
+const pageUrl = `${siteUrl}/buenas-noches`;
+const ogImage = `${siteUrl}/og-buenas-noches.png`;
+const title = 'Buenas Noches, Steffy 🌙';
+const description = 'Un mensaje especial con animaciones y música para ti 🌸✨';
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+
+    <!-- Open Graph (WhatsApp, Facebook, etc) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={pageUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Buenas Noches Steffy - mensaje especial con luna y estrellas" />
+    <meta property="og:locale" content="es_CO" />
+
+    <!-- Twitter Card (también funciona en otras apps) -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <meta name="description" content={description} />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌙</text></svg>" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Lato:wght@300;400&display=swap" rel="stylesheet" />
+    <style>
+      @import "tailwindcss";
+
+      @keyframes float {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        50% { transform: translateY(-20px) rotate(5deg); }
+      }
+      @keyframes twinkle {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.3; transform: scale(0.7); }
+      }
+      @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(40px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes glow {
+        0%, 100% { text-shadow: 0 0 10px #f9a8d4, 0 0 20px #f9a8d4, 0 0 40px #ec4899; }
+        50% { text-shadow: 0 0 20px #fbcfe8, 0 0 40px #f9a8d4, 0 0 80px #ec4899; }
+      }
+      @keyframes moonRise {
+        from { opacity: 0; transform: translateY(60px) scale(0.5); }
+        to { opacity: 1; transform: translateY(0) scale(1); }
+      }
+      @keyframes heartbeat {
+        0%, 100% { transform: scale(1); }
+        14% { transform: scale(1.2); }
+        28% { transform: scale(1); }
+        42% { transform: scale(1.15); }
+        70% { transform: scale(1); }
+      }
+      @keyframes shimmer {
+        0% { background-position: -200% center; }
+        100% { background-position: 200% center; }
+      }
+      @keyframes orbit {
+        from { transform: rotate(0deg) translateX(120px) rotate(0deg); }
+        to { transform: rotate(360deg) translateX(120px) rotate(-360deg); }
+      }
+      @keyframes cloudDrift {
+        0%, 100% { transform: translateX(0); opacity: 0.6; }
+        50% { transform: translateX(15px); opacity: 0.9; }
+      }
+
+      .star {
+        position: absolute;
+        border-radius: 50%;
+        background: white;
+        animation: twinkle var(--duration, 2s) ease-in-out infinite;
+        animation-delay: var(--delay, 0s);
+      }
+
+      .font-script { font-family: 'Dancing Script', cursive; }
+      .font-lato { font-family: 'Lato', sans-serif; }
+
+      .animate-float { animation: float 4s ease-in-out infinite; }
+      .animate-moonrise { animation: moonRise 1.5s ease-out forwards; }
+      .animate-glow { animation: glow 2s ease-in-out infinite; }
+      .animate-heartbeat { animation: heartbeat 1.5s ease-in-out infinite; }
+      .animate-fadeinup { animation: fadeInUp 1s ease-out forwards; }
+      .animate-orbit { animation: orbit 8s linear infinite; }
+      .animate-cloud { animation: cloudDrift 5s ease-in-out infinite; }
+
+      .delay-300 { animation-delay: 0.3s; }
+      .delay-600 { animation-delay: 0.6s; }
+      .delay-900 { animation-delay: 0.9s; }
+      .delay-1200 { animation-delay: 1.2s; }
+
+      .shimmer-text {
+        background: linear-gradient(90deg, #f9a8d4, #ffffff, #c084fc, #f9a8d4);
+        background-size: 200% auto;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: shimmer 3s linear infinite;
+      }
+
+      .glass {
+        background: rgba(255, 255, 255, 0.07);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+      }
+    </style>
+  </head>
+
+  <body class="min-h-screen overflow-x-hidden relative font-lato"
+        style="background: radial-gradient(ellipse at top, #0f0524 0%, #1a0533 40%, #0a0a1a 100%);">
+
+    <!-- Estrellas generadas dinámicamente via JS -->
+    <div id="stars" class="fixed inset-0 pointer-events-none z-0"></div>
+
+    <!-- Nubes suaves -->
+    <div class="fixed top-20 left-10 w-32 h-8 rounded-full opacity-20 animate-cloud"
+         style="background: radial-gradient(ellipse, #c084fc, transparent); animation-delay: 0s;"></div>
+    <div class="fixed top-40 right-16 w-24 h-6 rounded-full opacity-15 animate-cloud"
+         style="background: radial-gradient(ellipse, #f9a8d4, transparent); animation-delay: 2s;"></div>
+    <div class="fixed top-64 left-1/3 w-20 h-5 rounded-full opacity-10 animate-cloud"
+         style="background: radial-gradient(ellipse, #a5b4fc, transparent); animation-delay: 1s;"></div>
+
+    <!-- Contenido principal -->
+    <div class="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 py-12">
+
+      <!-- Luna flotante con orbita -->
+      <div class="relative mb-6" style="width: 200px; height: 200px;">
+        <!-- Luna -->
+        <div class="absolute inset-0 flex items-center justify-center animate-moonrise">
+          <div class="animate-float">
+            <div class="text-9xl filter drop-shadow-2xl" style="filter: drop-shadow(0 0 30px rgba(253, 224, 71, 0.6));">
+              🌙
+            </div>
+          </div>
+        </div>
+        <!-- Estrella en órbita -->
+        <div class="absolute top-1/2 left-1/2 -mt-2 -ml-2 animate-orbit">
+          <div class="text-2xl">⭐</div>
+        </div>
+      </div>
+
+      <!-- Título principal -->
+      <div class="opacity-0 animate-fadeinup delay-300 text-center mb-2">
+        <h1 class="font-script text-6xl md:text-8xl font-bold shimmer-text leading-tight">
+          Buenas Noches
+        </h1>
+      </div>
+
+      <!-- Nombre Steffy -->
+      <div class="opacity-0 animate-fadeinup delay-600 text-center mb-8">
+        <h2 class="font-script text-5xl md:text-7xl animate-glow"
+            style="color: #f9a8d4;">
+          Steffy
+          <span class="animate-heartbeat inline-block">💖</span>
+        </h2>
+      </div>
+
+      <!-- Mensaje principal -->
+      <div class="opacity-0 animate-fadeinup delay-900 max-w-xl text-center mb-10">
+        <div class="glass rounded-3xl px-8 py-6 shadow-2xl">
+          <p class="text-white text-lg md:text-xl leading-relaxed font-light" style="color: rgba(255,255,255,0.9);">
+            Que esta noche te envuelva en dulces sueños,<br />
+            que cada estrella te cuide mientras descansas,<br />
+            y que mañana amanezca con una sonrisa<br />
+            tan hermosa como tú. 🌸
+          </p>
+          <div class="mt-4 flex justify-center gap-3 text-2xl">
+            <span class="animate-float" style="animation-delay: 0s;">✨</span>
+            <span class="animate-float" style="animation-delay: 0.5s;">🌸</span>
+            <span class="animate-float" style="animation-delay: 1s;">💫</span>
+            <span class="animate-float" style="animation-delay: 1.5s;">🌙</span>
+            <span class="animate-float" style="animation-delay: 2s;">🌸</span>
+            <span class="animate-float" style="animation-delay: 0.3s;">✨</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Canción en YouTube -->
+      <div class="opacity-0 animate-fadeinup delay-1200 w-full max-w-sm">
+        <a href="https://www.youtube.com/watch?v=2Vv-BfVoq4g" target="_blank" rel="noopener"
+           class="block glass rounded-3xl p-6 shadow-2xl group transition-all duration-300 hover:scale-[1.03] hover:shadow-pink-900/40"
+           style="text-decoration: none;">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="text-4xl animate-float">🎵</div>
+            <div>
+              <p class="text-white font-semibold text-sm">Una canción para ti</p>
+              <p class="text-pink-300 text-xs font-light">Perfect — Ed Sheeran</p>
+            </div>
+          </div>
+
+          <!-- Botón estilo YouTube -->
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3 px-5 py-2.5 rounded-full font-semibold text-sm"
+                 style="background: linear-gradient(135deg, #ec4899, #8b5cf6); color: white; box-shadow: 0 4px 15px rgba(236,72,153,0.4);">
+              <!-- Ícono play de YouTube -->
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4">
+                <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0C.488 3.45.029 5.804 0 12c.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0C23.512 20.55 23.971 18.196 24 12c-.029-6.185-.484-8.549-4.385-8.816zM9 16V8l8 3.993L9 16z"/>
+              </svg>
+              Escuchar en YouTube
+            </div>
+            <span class="text-white/40 group-hover:text-white/80 transition-colors text-lg">↗</span>
+          </div>
+
+          <!-- Barras decorativas -->
+          <div class="mt-4 flex items-end justify-center gap-1 h-6">
+            <div class="w-1.5 rounded-full bg-pink-400/50" style="height:40%;animation:twinkle 0.8s ease-in-out infinite;animation-delay:0s;"></div>
+            <div class="w-1.5 rounded-full bg-purple-400/50" style="height:70%;animation:twinkle 0.8s ease-in-out infinite;animation-delay:0.15s;"></div>
+            <div class="w-1.5 rounded-full bg-pink-300/50" style="height:50%;animation:twinkle 0.8s ease-in-out infinite;animation-delay:0.3s;"></div>
+            <div class="w-1.5 rounded-full bg-violet-400/50" style="height:90%;animation:twinkle 0.8s ease-in-out infinite;animation-delay:0.45s;"></div>
+            <div class="w-1.5 rounded-full bg-pink-400/50" style="height:60%;animation:twinkle 0.8s ease-in-out infinite;animation-delay:0.6s;"></div>
+            <div class="w-1.5 rounded-full bg-purple-300/50" style="height:80%;animation:twinkle 0.8s ease-in-out infinite;animation-delay:0.75s;"></div>
+            <div class="w-1.5 rounded-full bg-pink-300/50" style="height:45%;animation:twinkle 0.8s ease-in-out infinite;animation-delay:0.9s;"></div>
+          </div>
+        </a>
+      </div>
+
+      <!-- Footer suave -->
+      <div class="mt-10 opacity-40 text-center">
+        <p class="font-script text-pink-300 text-xl">Con todo el cariño del mundo 🌙✨</p>
+      </div>
+    </div>
+
+    <!-- Partículas flotantes (corazones y estrellas) -->
+    <div id="particles" class="fixed inset-0 pointer-events-none z-5 overflow-hidden"></div>
+
+    <script>
+      // ── Estrellas ──────────────────────────────────────────────
+      const starsContainer = document.getElementById('stars');
+      for (let i = 0; i < 180; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        const size = Math.random() * 3 + 1;
+        star.style.cssText = `
+          width:${size}px;height:${size}px;
+          top:${Math.random()*100}%;left:${Math.random()*100}%;
+          --duration:${Math.random()*3+1.5}s;--delay:${Math.random()*4}s;`;
+        starsContainer.appendChild(star);
+      }
+
+      // ── Partículas flotantes ───────────────────────────────────
+      const emojis = ['💫','✨','🌸','⭐','💖','🌙'];
+      const particles = document.getElementById('particles');
+      function spawnParticle() {
+        const p = document.createElement('div');
+        p.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        p.style.cssText = `position:absolute;font-size:${Math.random()*16+10}px;
+          left:${Math.random()*100}vw;bottom:-40px;opacity:0;
+          animation:fadeInUp ${Math.random()*4+5}s ease-out forwards;`;
+        particles.appendChild(p);
+        setTimeout(() => p.remove(), 9000);
+      }
+      setInterval(spawnParticle, 1200);
+
+    </script>
+  </body>
+</html>

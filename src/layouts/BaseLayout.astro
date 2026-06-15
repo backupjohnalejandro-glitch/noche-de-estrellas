@@ -1,0 +1,38 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'Mi sitio estático con Astro' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <link rel="stylesheet" href="/styles/global.css" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="/">Inicio</a>
+        <a href="/about">Acerca de</a>
+        <a href="/blog">Blog</a>
+      </nav>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer>
+      <p>&copy; {new Date().getFullYear()} Mi Sitio Astro</p>
+    </footer>
+  </body>
+</html>
