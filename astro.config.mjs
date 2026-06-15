@@ -5,7 +5,8 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://TU-DOMINIO.com', // Cambia esto por tu URL real al hacer deploy
+  site: 'https://backupjohnalejandro-glitch.github.io',
+  base: '/noche-de-estrellas',
   output: 'static',
 
   build: {
